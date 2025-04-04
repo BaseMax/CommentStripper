@@ -58,46 +58,49 @@ function removeComments() {
     let inLineComment = false;
 
     while (i < input.length) {
-        if (isInString(input, i, inString, stringChar)) {
-            inString = handleString(input, i, inString, stringChar, output);
-            continue;
-        }
-
         if (inString) {
+            output += input[i];
+            if (input[i] === stringChar && (i === 0 || input[i-1] !== escapeSymbol)) {
+                inString = false;
+                stringChar = '';
+            }
             i++;
             continue;
         }
-
-        if (handleBlockComment(input, i, blockStart, blockEnd, inBlockComment)) {
-            inBlockComment = true;
-            i += blockStart.length;
-            continue;
-        }
-
-        if (handleBlockCommentEnd(input, i, blockEnd, inBlockComment)) {
-            inBlockComment = false;
-            i += blockEnd.length;
-            continue;
-        }
-
-        if (inBlockComment) {
-            i++;
-            continue;
-        }
-
-        if (handleLineComment(input, i, lineComment, inLineComment, output)) {
-            inLineComment = true;
-            i += lineComment.length;
-            continue;
-        }
-
-        if (inLineComment && input[i] === '\n') {
-            inLineComment = false;
+        if (input[i] === '"' || input[i] === "'" || input[i] === "`") {
+            inString = true;
+            stringChar = input[i];
             output += input[i];
             i++;
             continue;
         }
 
+        if (!inBlockComment && blockStart && input.startsWith(blockStart, i)) {
+            inBlockComment = true;
+            i += blockStart.length;
+            continue;
+        }
+        if (inBlockComment && blockEnd && input.startsWith(blockEnd, i)) {
+            inBlockComment = false;
+            i += blockEnd.length;
+            continue;
+        }
+        if (inBlockComment) {
+            i++;
+            continue;
+        }
+
+        if (!inLineComment && lineComment && input.startsWith(lineComment, i)) {
+            inLineComment = true;
+            i += lineComment.length;
+            continue;
+        }
+        if (inLineComment && input[i] === '\n') {
+            inLineComment = false;
+            output += '\n';
+            i++;
+            continue;
+        }
         if (inLineComment) {
             i++;
             continue;
@@ -110,38 +113,9 @@ function removeComments() {
     if (trimWhitespace) {
         output = output.replace(/[ \t]+$/gm, '');
     }
-
     elements.outputCode.value = output.trim();
 }
 
-function isInString(input, i, inString, stringChar) {
-    return !inString && (input[i] === '"' || input[i] === "'" || input[i] === "`") && (stringChar !== input[i]);
-}
-
-function handleString(input, i, inString, stringChar, output) {
-    if (!inString) {
-        inString = true;
-        stringChar = input[i];
-        output += input[i];
-        return true;
-    } else if (input[i] === stringChar && i > 0 && input[i-1] !== elements.escapeSymbol.value) {
-        inString = false;
-    }
-    output += input[i];
-    return false;
-}
-
-function handleBlockComment(input, i, blockStart, blockEnd, inBlockComment) {
-    return !inBlockComment && blockStart && input.startsWith(blockStart, i);
-}
-
-function handleBlockCommentEnd(input, i, blockEnd, inBlockComment) {
-    return inBlockComment && blockEnd && input.startsWith(blockEnd, i);
-}
-
-function handleLineComment(input, i, lineComment, inLineComment, output) {
-    return !inLineComment && lineComment && input.startsWith(lineComment, i);
-}
-
 elements.inputCode.addEventListener('input', removeComments);
+
 generatePresetButtons();
