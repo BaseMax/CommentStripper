@@ -60,13 +60,14 @@ function removeComments() {
     while (i < input.length) {
         if (inString) {
             output += input[i];
-            if (input[i] === stringChar && (i === 0 || input[i-1] !== escapeSymbol)) {
+            if (input[i] === stringChar && (i === 0 || input[i - 1] !== escapeSymbol)) {
                 inString = false;
                 stringChar = '';
             }
             i++;
             continue;
         }
+
         if (input[i] === '"' || input[i] === "'" || input[i] === "`") {
             inString = true;
             stringChar = input[i];
