@@ -54,8 +54,6 @@ function removeComments() {
     let i = 0;
     let inString = false;
     let stringChar = '';
-    let inBlockComment = false;
-    let inLineComment = false;
 
     while (i < input.length) {
         if (isInBlockComment(input, i, blockStart, blockEnd)) {
