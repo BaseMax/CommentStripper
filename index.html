@@ -1,1 +1,49 @@
-
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Remove Comments - A Comment Remover For Almost Any Language</title>
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Remove Comments - A Comment Remover For Almost Any Language</h1>
+        <div class="container">
+            <div style="flex: 1;">
+                <h3>Input Code</h3>
+                <textarea id="inputCode" placeholder="Paste your code here..."></textarea>
+                <h3>Output Code</h3>
+                <textarea id="outputCode" placeholder="Processed code will appear here..." readonly></textarea>
+                <button class="remove-btn" onclick="removeComments()">Remove Comments</button>
+            </div>
+            <div style="width: 300px;">
+                <h3>Configuration</h3>
+                <div class="config">
+                    <label>Line Comment:</label>
+                    <input id="lineComment" value="//">
+                    <label>Escape Symbol:</label>
+                    <input id="escapeSymbol" value="\">
+                    <label>Block Comment Start:</label>
+                    <input id="blockStart" value="/*">
+                    <label>Block Comment End:</label>
+                    <input id="blockEnd" value="*/">
+                </div>
+                <div class="presets">
+                    <h4>Presets:</h4>
+                    <button class="preset-btn" onclick="setPreset('c')">C/C++/C#</button>
+                    <button class="preset-btn" onclick="setPreset('php')">PHP</button>
+                    <button class="preset-btn" onclick="setPreset('java')">Java</button>
+                    <button class="preset-btn" onclick="setPreset('js')">JavaScript</button>
+                    <button class="preset-btn" onclick="setPreset('python')">Python</button>
+                    <button class="preset-btn" onclick="setPreset('html')">HTML</button>
+                    <button class="preset-btn" onclick="setPreset('css')">CSS</button>
+                    <button class="preset-btn" onclick="setPreset('sql')">SQL</button>
+                    <button class="preset-btn" onclick="setPreset('matlab')">MATLAB</button>
+                    <button class="preset-btn" onclick="setPreset('ruby')">Ruby</button>
+                    <button class="preset-btn" onclick="setPreset('swift')">Swift</button>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="script.js"></script>
+    </body>
+</html>
