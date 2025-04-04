@@ -5,6 +5,7 @@ const elements = {
     escapeSymbol: document.querySelector('#escapeSymbol'),
     blockStart: document.querySelector('#blockStart'),
     blockEnd: document.querySelector('#blockEnd'),
+    trimWhitespace: document.querySelector('#trimWhitespace'),
     presetsContainer: document.querySelector('.presets')
 };
 
@@ -47,6 +48,7 @@ function removeComments() {
     const escapeSymbol = elements.escapeSymbol.value;
     const blockStart = elements.blockStart.value;
     const blockEnd = elements.blockEnd.value;
+    const shouldTrimWhitespace = elements.trimWhitespace.checked;
 
     let output = '';
     let i = 0;
@@ -103,6 +105,10 @@ function removeComments() {
 
         output += input[i];
         i++;
+    }
+
+    if (shouldTrimWhitespace) {
+        output = output.split('\n').map(line => line.replace(/\s+$/, '')).join('\n');
     }
 
     elements.outputCode.value = output.trim();
