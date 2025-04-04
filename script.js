@@ -58,24 +58,6 @@ function removeComments() {
     let inLineComment = false;
 
     while (i < input.length) {
-        if (inString) {
-            output += input[i];
-            if (input[i] === stringChar && (i === 0 || input[i - 1] !== escapeSymbol)) {
-                inString = false;
-                stringChar = '';
-            }
-            i++;
-            continue;
-        }
-
-        if (input[i] === '"' || input[i] === "'" || input[i] === "`") {
-            inString = true;
-            stringChar = input[i];
-            output += input[i];
-            i++;
-            continue;
-        }
-
         if (!inBlockComment && blockStart && input.startsWith(blockStart, i)) {
             inBlockComment = true;
             i += blockStart.length;
@@ -90,7 +72,7 @@ function removeComments() {
             i++;
             continue;
         }
-
+    
         if (!inLineComment && lineComment && input.startsWith(lineComment, i)) {
             inLineComment = true;
             i += lineComment.length;
@@ -106,7 +88,24 @@ function removeComments() {
             i++;
             continue;
         }
-
+    
+        if (!inString && (input[i] === '"' || input[i] === "'" || input[i] === "`")) {
+            inString = true;
+            stringChar = input[i];
+            output += input[i];
+            i++;
+            continue;
+        }
+        if (inString) {
+            output += input[i];
+            if (input[i] === stringChar && (i === 0 || input[i - 1] !== escapeSymbol)) {
+                inString = false;
+                stringChar = '';
+            }
+            i++;
+            continue;
+        }
+    
         output += input[i];
         i++;
     }
