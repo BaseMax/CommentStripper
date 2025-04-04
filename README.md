@@ -9,7 +9,8 @@
 - Includes presets for popular programming languages (e.g., C, Java, Python, PHP, JavaScript, etc.).
 - Dynamic button generation for easy preset selection.
 - Simple and intuitive interface to paste and clean your code.
-
+- Trim Whitespace at End of Lines
+- 
 ## Supported Languages
 
 - **C/C++/C#**
