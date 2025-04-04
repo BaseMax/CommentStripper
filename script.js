@@ -107,9 +107,8 @@ function removeComments() {
         i++;
     }
 
-    // Trim whitespace at the end of each line if the checkbox is checked
     if (trimWhitespace) {
-        output = output.replace(/[ \t]+$/gm, ''); // Trim spaces and tabs at end of lines
+        output = output.replace(/[ \t]+$/gm, '');
     }
 
     elements.outputCode.value = output.trim();
