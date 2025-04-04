@@ -9,14 +9,14 @@
     <body>
         <h1>Remove Comments - A Comment Remover For Almost Any Language</h1>
         <div class="container">
-            <div class="input-output">
+            <div style="flex: 1;">
                 <h3>Input Code</h3>
                 <textarea id="inputCode" placeholder="Paste your code here..."></textarea>
                 <h3>Output Code</h3>
                 <textarea id="outputCode" placeholder="Processed code will appear here..." readonly></textarea>
                 <button class="remove-btn" onclick="removeComments()">Remove Comments</button>
             </div>
-            <div class="config-panel">
+            <div style="width: 300px;">
                 <h3>Configuration</h3>
                 <div class="config">
                     <label>Line Comment:</label>
@@ -27,10 +27,8 @@
                     <input id="blockStart" value="/*">
                     <label>Block Comment End:</label>
                     <input id="blockEnd" value="*/">
-                    <label>
-                        <input id="trimWhitespace" type="checkbox" checked>
-                        Trim trailing whitespace at the end of lines
-                    </label>
+                    <label>Trim Whitespace at End of Lines:</label>
+                    <input type="checkbox" id="trimWhitespace" checked>
                 </div>
                 <div class="presets">
                     <h4>Presets:</h4>

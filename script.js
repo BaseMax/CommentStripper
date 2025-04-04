@@ -48,7 +48,7 @@ function removeComments() {
     const escapeSymbol = elements.escapeSymbol.value;
     const blockStart = elements.blockStart.value;
     const blockEnd = elements.blockEnd.value;
-    const shouldTrimWhitespace = elements.trimWhitespace.checked;
+    const trimWhitespace = elements.trimWhitespace.checked;
 
     let output = '';
     let i = 0;
@@ -107,15 +107,16 @@ function removeComments() {
         i++;
     }
 
-    if (shouldTrimWhitespace) {
-        output = output.split('\n').map(line => line.replace(/\s+$/, '')).join('\n');
+    // Trim whitespace at the end of each line if the checkbox is checked
+    if (trimWhitespace) {
+        output = output.replace(/[ \t]+$/gm, ''); // Trim spaces and tabs at end of lines
     }
 
     elements.outputCode.value = output.trim();
 }
 
 function isInString(input, i, inString, stringChar) {
-    return !inString && (input[i] === '"' || input[i] === "'") && (stringChar !== input[i]);
+    return !inString && (input[i] === '"' || input[i] === "'" || input[i] === "`") && (stringChar !== input[i]);
 }
 
 function handleString(input, i, inString, stringChar, output) {
@@ -143,4 +144,5 @@ function handleLineComment(input, i, lineComment, inLineComment, output) {
     return !inLineComment && lineComment && input.startsWith(lineComment, i);
 }
 
+elements.inputCode.addEventListener('input', removeComments);
 generatePresetButtons();
